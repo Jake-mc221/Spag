@@ -27,15 +27,23 @@ class image_commands(commands.Cog):
         await ctx.send(file=discord.File(fp=avatar_bytes, filename='avatar.jpg'))
 
     @commands.command()
-    async def blur(self, ctx, arg):
-        print(arg)
-        self.strat = self.handler.handle("blur")
+    async def fast(self, ctx):
+        self.strat = self.handler.handle("fast")
         await self.process_image(ctx)
 
+    @commands.command()
+    async def blur(self, ctx):
+        self.strat = self.handler.handle("blur")
+        await self.process_image(ctx)
 
     @commands.command()
     async def swirl(self, ctx):
         self.strat = self.handler.handle("swirl")
+        await self.process_image(ctx)
+
+    @commands.command()
+    async def deepfry(self, ctx):
+        self.strat = self.handler.handle("deepfry")
         await self.process_image(ctx)
 
     @commands.command()
@@ -63,10 +71,8 @@ class image_commands(commands.Cog):
 
                     with BytesIO(response.content) as input_buffer:
                         with Image(file=input_buffer) as img:
-                            # Apply radial blur effect
                             img = self.strat.algo(img)
 
-                            # Save the edited image to a buffer
                             output_buffer = BytesIO()
                             img.save(file=output_buffer)
                             output_buffer.seek(0)

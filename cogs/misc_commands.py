@@ -8,6 +8,7 @@ import os
 import faces
 import requests
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import yt_dlp as youtube_dl
 
@@ -29,7 +30,10 @@ class misc_commands(commands.Cog):
 
         # Setup Selenium WebDriver
         service = Service(ChromeDriverManager().install())
-        browser = webdriver.Chrome(service=service)
+
+        options = Options()
+        options.add_argument('--headless')
+        browser = webdriver.Chrome(service=service, options=options)
 
         browser.get(url)
 
@@ -56,7 +60,7 @@ class misc_commands(commands.Cog):
         soup = BeautifulSoup(html, 'html.parser')
 
         gif_elements = soup.select('a.title, a.isVideo')
-        print(len(gif_elements))
+        #print(gif_elements)
 
         if gif_elements:
             # Randomly select an element
@@ -64,11 +68,12 @@ class misc_commands(commands.Cog):
             # Extract the href attribute
             href = random_element.get('href')
             href = href.replace("watch", "ifr")
-
+            print(href)
             arg = "/" + arg
             url = url.replace(str(arg), "")
             url = url.replace("/gifs", "")
             url = url + href
+
             await self.download(ctx,url)
 
     # forgot what i was trying to do here
@@ -107,7 +112,7 @@ class misc_commands(commands.Cog):
         # Download video using youtube-dl
         print(url)
         ydl_opts = {
-            'format': 'bestvideo+bestaudio/best',
+            'format': 'worst',
             'outtmpl': 'video.%(ext)s',
             'force_overwrites': True,
             'postprocessors': [{

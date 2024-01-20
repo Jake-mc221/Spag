@@ -12,6 +12,8 @@ HEADERS = {"Authorization": TOKEN}
 API_URL2 = "https://api-inference.huggingface.co/models/suno/bark-small"
 headers2 = {"Authorization": TOKEN}
 
+API_URL3 = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
+
 # redo
 class ai_images(commands.Cog):
     def __init__(self, bot):
@@ -21,7 +23,7 @@ class ai_images(commands.Cog):
     async def gen(self, ctx, *, arg):
         payload = ({"inputs": arg,
                     "parameters": {"wait_for_model": True}})
-        response = requests.post(API_URL, headers=HEADERS, json=payload)
+        response = requests.post(API_URL3, headers=HEADERS, json=payload)
         print(response)
         print(arg)
 
