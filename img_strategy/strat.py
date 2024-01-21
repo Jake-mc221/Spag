@@ -31,6 +31,11 @@ class implode_strategy(Strategy):
         img.implode(amount=0.35)
         return img
 
+class oilpaint_strategy(Strategy):
+    def algo(self, img: Image):
+        img.oil_paint(radius=5.0, sigma=0.0)
+        return img
+
 class fast_strategy(Strategy):
     def algo(self, img: Image):
         img.motion_blur(radius=16, sigma=8, angle=-45)
@@ -73,3 +78,5 @@ class handler:
             return deepfry_strategy()
         elif choice == "fast":
             return fast_strategy()
+        elif choice == "oilpaint":
+            return oilpaint_strategy()
