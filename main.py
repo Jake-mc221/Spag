@@ -13,12 +13,10 @@ ACT = discord.Game(name=ai_text.get_ai_res("hi"))
 bot = commands.Bot(command_prefix="!", intents=INTENTS, activity=ACT, help_command=None)
 bot.per_rate = 2
 
-
 async def load():
     for filename in os.listdir('./cogs'):
         if filename.endswith('.py'):
             await bot.load_extension(f'cogs.{filename[:-3]}')
-
 
 @bot.command()
 async def test(ctx):

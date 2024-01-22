@@ -19,6 +19,10 @@ class misc_commands(commands.Cog):
         self.bot = bot
 
     @commands.command()
+    async def status(self, ctx, *, arg):
+        await self.bot.change_presence(activity=discord.Game(name=arg))
+
+    @commands.command()
     async def porn(self, ctx, *, arg):
         url = "https://www.redgifs.com/gifs/" + arg
         print(url)
@@ -76,36 +80,6 @@ class misc_commands(commands.Cog):
 
             await self.download(ctx,url)
 
-    # forgot what i was trying to do here
-    @commands.command()
-    async def smile(self, ctx):
-
-        if ctx.message.attachments:
-            for attachment in ctx.message.attachments:
-                if any(attachment.filename.lower().endswith(ext) for ext in ['png', 'jpg', 'jpeg', 'gif']):
-                    # Download the image
-                    pic = requests.get(attachment.url)
-                    print(pic)
-
-                    with open('original_image.jpg', 'wb') as f:
-                        f.write(pic.content)
-
-
-
-                    try:
-                        # Attempt to send the file
-                        sad = open('original_image.jpg', 'rb')
-                        image = faces.FaceAppImage(file=sad)
-                        print(image.to_json())
-                        happy = image.apply_filter('smile', cropped=True)
-                    except Exception as e:
-                        # If sending fails, print an error message
-                        print(f"An error occurred while sending the file: {e}")
-
-                    await ctx.send(happy)
-
-
-
     # download a video from youtube, works well but kinda messy
     @commands.command()
     async def download(self, ctx, url):
@@ -135,8 +109,8 @@ class misc_commands(commands.Cog):
         except Exception as e:
             # If sending fails, print an error message
             print(f"An error occurred while sending the file: {e}")
-            await ctx.send(f"An error occurred while sending the file: {e}")
-            await ctx.send("Please try again")
+            await ctx.send(f"`An error occurred while sending the file: {e}`")
+            await ctx.send("`Please try again`")
         finally:
             # Remove the file whether sending was successful or not
             if os.path.exists("video.mp4"):
@@ -145,7 +119,6 @@ class misc_commands(commands.Cog):
     # test command to talk through the bet
     @commands.command()
     async def anon(self, ctx, *, arg):
-        print("ddd")
         channel = 240771274719232000
         target_channel = self.bot.get_channel(channel)
 
