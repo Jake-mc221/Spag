@@ -1,3 +1,4 @@
+import random
 from discord.ext import commands
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
@@ -31,7 +32,7 @@ def get_ai_res(msg):
 # only responds if users says "spag"
 class ai_text(commands.Cog):
     def __init__(self, bot):
-        self.response_chance = 1
+        self.response_chance = 1.0
         self.bot = bot
         print(f"Initializing cog with bot: {bot}")
 
@@ -42,10 +43,33 @@ class ai_text(commands.Cog):
 
         if "spag" in str(message.content).lower():
             response = get_ai_res(str(message.content.replace("spag", "")))
+
             await message.channel.send(response.strip())
 
 
+    # sets the response rate for the bot
+    @commands.command()
+    async def setrate(self, ctx, *, arg):
 
+        try:
+            self.response_chance = float(arg)
+            await ctx.channel.send(f"`Rate set to {self.response_chance}`")
+
+        except ValueError:
+            await ctx.channel.send("`Invalid input. Please enter a valid integer.`")
+
+    # static code will be fixed in the future
+    # responds to a message unreported
+    @commands.Cog.listener('on_message')
+    async def on_message_two(self, message):
+        random_number = random.randint(0, 99)
+        vent_id = 750198744485462078
+
+        if (self.response_chance > random_number
+                and message.author != self.bot.user
+                and message.channel.id != vent_id):
+            response = get_ai_res("")
+            await message.channel.send(response.strip())
 
 
 async def setup(bot):
