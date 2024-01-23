@@ -24,15 +24,33 @@ async def test(ctx):
 
 @bot.command()
 async def help(ctx):
-    msg = ("```css\n"
-           "== [Spag Commands List] =="
-           ""
-           ""
-           ""
-           ""
-           ""
-           "```")
-    await ctx.send(msg)
+    msg = """
+Spag Commands List
+    Image commands
+        -!pfp
+        -!fast
+        -!swirl
+        -!blur
+        -!deepfry
+        -!implode
+        -!oilpaint
+    React commands
+        -!ratio
+        -!clown
+    AI commands
+        -!setrate
+        -!gen
+        -!talk
+    Misc commands
+        -!download
+        -!anon
+        -!porn
+        -!status
+    Music commands
+        -!play
+    """
+    await ctx.send(f'```css\n{msg}\n```')
+
 
 @bot.event
 async def on_ready():
