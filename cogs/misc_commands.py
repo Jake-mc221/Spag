@@ -1,11 +1,14 @@
 import time
 import random
+import re
+from io import BytesIO
+
+from wand.image import Image
 from discord.ext import commands
 import discord
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import os
-import faces
 import requests
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -123,6 +126,23 @@ class misc_commands(commands.Cog):
         target_channel = self.bot.get_channel(channel)
 
         await target_channel.send(arg)
+
+    # makes an emoji big
+    @commands.command()
+    async def big(self, ctx,  emoji):
+        match = re.match(r"<:[a-zA-Z0-9_]+:(\d+)>", emoji)
+
+        emoji_url = f"https://cdn.discordapp.com/emojis/{match.group(1)}.png"
+        emoji_image_data = requests.get(emoji_url).content
+        print(emoji_image_data)
+
+        with Image(blob=emoji_image_data) as img:
+            img.resize(2048, 2048)
+            resized_image_data = img.make_blob()
+
+        await ctx.send(file=discord.File(BytesIO(resized_image_data), filename=f"resized_emoji_{2048}.png"))
+
+
 
 
 async def setup(bot):
