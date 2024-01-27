@@ -2,8 +2,7 @@ import time
 import random
 import re
 from io import BytesIO
-
-from wand.image import Image
+from PIL import Image as PILImage
 from discord.ext import commands
 import discord
 from bs4 import BeautifulSoup
@@ -130,19 +129,43 @@ class misc_commands(commands.Cog):
     # makes an emoji big
     @commands.command()
     async def big(self, ctx,  emoji):
-        match = re.match(r"<:[a-zA-Z0-9_]+:(\d+)>", emoji)
+        match = re.search(r'(?<=:)\d+', emoji)
+        id = match.group(0) if match else None
+        print(emoji)
+        emoji_url = ""
 
-        emoji_url = f"https://cdn.discordapp.com/emojis/{match.group(1)}.png"
-        emoji_image_data = requests.get(emoji_url).content
-        print(emoji_image_data)
+        if emoji[1] == "a":
+            try:
+                emoji_url = f"https://cdn.discordapp.com/emojis/{id}.gif"
+                emoji_image_data = requests.get(emoji_url).content
+                frames = []
 
-        with Image(blob=emoji_image_data) as img:
-            img.resize(2048, 2048)
-            resized_image_data = img.make_blob()
+                with PILImage.open(BytesIO(emoji_image_data)) as img:
+                    for frame in range(img.n_frames):
+                        img.seek(frame)
+                        frame_data = img.resize((1024, 1024),PILImage.BICUBIC)
+                        frames.append(frame_data)
 
-        await ctx.send(file=discord.File(BytesIO(resized_image_data), filename=f"resized_emoji_{2048}.png"))
+                gif_buffer = BytesIO()
+                frames[0].save(gif_buffer, format="GIF", save_all=True, append_images=frames[1:], loop=0,
+                               duration=img.info['duration'], disposal=2)
 
+                resized_gif_data = gif_buffer.getvalue()
 
+                await ctx.send(file=discord.File(BytesIO(resized_gif_data), filename=f"resized_emoji_{2048}.gif"))
+            except Exception as e:
+                print(e)
+
+        else:
+            emoji_url = f"https://cdn.discordapp.com/emojis/{id}.png"
+            emoji_image_data = requests.get(emoji_url).content
+
+            with PILImage.open(BytesIO(emoji_image_data)) as img:
+                img = img.resize((2048, 2048), PILImage.LANCZOS)
+                resized_image_data = BytesIO()
+                img.save(resized_image_data, format="PNG")
+                resized_image_data.seek(0)
+                await ctx.send(file=discord.File(resized_image_data, filename=f"resized_emoji_{id}.png"))
 
 
 async def setup(bot):

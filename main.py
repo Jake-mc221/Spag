@@ -1,5 +1,6 @@
 import asyncio
 import os
+from PIL import Image as PILImage
 
 import discord
 from discord.ext import commands
@@ -46,6 +47,7 @@ Spag Commands List
         -!anon
         -!porn
         -!status
+        -!big
     Music commands
         -!play
     """
