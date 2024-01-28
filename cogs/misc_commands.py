@@ -126,7 +126,23 @@ class misc_commands(commands.Cog):
 
         await target_channel.send(arg)
 
-    # makes an emoji big
+    @commands.command()
+    async def rev(self, ctx):
+        message = ctx.message
+        mc = message.content
+        mc = mc.replace('!rev','')
+
+        if message.reference is not None:
+            re_msg_id = message.reference.message_id
+            re = await message.channel.fetch_message(re_msg_id)
+            mc = re.content
+
+        await ctx.send(mc[::-1])
+
+
+
+
+    # makes an emoji big, should probs switch to image cog
     @commands.command()
     async def big(self, ctx,  emoji):
         match = re.search(r'(?<=:)\d+', emoji)

@@ -90,6 +90,7 @@ class image_commands(commands.Cog):
         if message.reference and message.reference.resolved:
             message = message.reference.resolved
 
+
         print(len(message.attachments))
         if len(message.attachments) == 1:
             for attachment in message.attachments:
