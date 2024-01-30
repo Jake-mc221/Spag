@@ -139,9 +139,6 @@ class misc_commands(commands.Cog):
 
         await ctx.send(mc[::-1])
 
-
-
-
     # makes an emoji big, should probs switch to image cog
     @commands.command()
     async def big(self, ctx,  emoji):

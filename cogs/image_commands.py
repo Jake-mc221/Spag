@@ -84,6 +84,16 @@ class image_commands(commands.Cog):
         self.strat = self.handler.handle("oilpaint")
         await self.process_image(ctx)
 
+    @commands.command()
+    async def meme(self, ctx):
+        self.strat = self.handler.handle("meme")
+        await self.process_image(ctx)
+
+    @commands.command()
+    async def dis(self, ctx):
+        self.strat = self.handler.handle("dis")
+        await self.process_image(ctx)
+
     async def process_image(self, ctx):
         message = ctx.message
 
