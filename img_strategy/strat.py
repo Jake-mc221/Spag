@@ -79,7 +79,24 @@ class meme_strategy(Strategy):
 class dis_strategy(Strategy):
     def algo(selfslef, img: Image):
         img.distort('barrel', (0.5, 0.8, 0.0, 1.0))
-        img.save(filename='output_distorted.jpg')
+        return img
+
+class ascii_strategy(Strategy):
+    def algo(selfslef, img: Image):
+        img.type = 'grayscale'
+        brightness_threshold = 0.5
+
+        ascii_art = ''
+        for row in range(img.height):
+            for col in range(img.width):
+                pixel = img[col, row]
+                brightness = pixel.intensity
+
+                # Choose ASCII character based on brightness
+                char = '#' if brightness > brightness_threshold else ' '
+                ascii_art += char
+
+        img.save(filename='output_ascii_art.txt')
         return img
 
 
@@ -104,3 +121,5 @@ class handler:
             return meme_strategy()
         elif choice == "dis":
             return dis_strategy()
+        elif choice == "ascii":
+            return ascii_strategy()

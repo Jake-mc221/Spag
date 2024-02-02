@@ -35,6 +35,8 @@ Spag Commands List
         -!deepfry
         -!implode
         -!oilpaint
+        -!meme
+        -!dis
     React commands
         -!ratio
         -!clown

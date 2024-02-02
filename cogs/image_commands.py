@@ -94,6 +94,11 @@ class image_commands(commands.Cog):
         self.strat = self.handler.handle("dis")
         await self.process_image(ctx)
 
+    @commands.command()
+    async def ascii(self, ctx):
+        self.strat = self.handler.handle("ascii")
+        await self.process_image(ctx)
+
     async def process_image(self, ctx):
         message = ctx.message
 
