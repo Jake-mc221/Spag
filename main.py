@@ -50,6 +50,7 @@ Spag Commands List
         -!porn
         -!status
         -!big
+        -!rev
     Music commands
         -!play
     """

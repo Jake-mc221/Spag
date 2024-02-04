@@ -27,29 +27,6 @@ class image_commands(commands.Cog):
         await ctx.send(file=discord.File(fp=avatar_bytes, filename='avatar.jpg'))
 
     @commands.command()
-    async def ascii(self, ctx):
-        # Replace this with your ASCII art
-        try:
-            # Example ASCII art of a smiley face
-            ascii_art = """
-                                         8888  8888888
-                 
-          
-                
-                
-                
-                
-               """
-
-            print("Sending ASCII art...")
-            await ctx.send(f'```\n{ascii_art}\n```')
-            print("ASCII art sent successfully.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
-
-
-
-    @commands.command()
     async def fast(self, ctx):
         self.strat = self.handler.handle("fast")
         await self.process_image(ctx)
