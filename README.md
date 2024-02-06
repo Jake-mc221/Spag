@@ -21,10 +21,10 @@
 ## Table Of Contents
 
 * [About the Project](#about-the-project)
-* [Getting Started](#getting-started)
+* [Commads](#commands)
 * [Contributing](#contributing)
 * [Authors](#authors)
-* [Acknowledgements](#acknowledgements)
+* [Planned Features](#planned-features)
 
 ## About The Project
 
@@ -34,7 +34,7 @@
 
 🤖 Spagorto
 
-Spagorto is not your run-of-the-mill Discord bot; he's an algorithmic virtuoso, trained on 10k lines of random Reddit comments data. Embrace the chaos of spontaneous  conversations with a bot that not only generates funny one-liners but dances on the edge of logical abstraction.
+Spagorto started off as a little side project for my friends discord. The idea was simple, train a language model on random data to proved hilarious out of pocket responses. Over time, as development progressed, Spagorto evolved into a versatile Discord bot, incorporating a myriad of advanced features. The following highlights merely scratch the surface of its extensive capabilities. 
 
 🎵 Music 
 
@@ -43,7 +43,7 @@ Beyond his linguistic prowess, Spagorto moonlights as your server's musical cond
 ![Screen Shot](images/3.png)
 
 
-## Getting Started
+## Commands
 
 Commands
 ```sh
@@ -75,8 +75,15 @@ Spag Commands List
     Music commands
         -!play
 ```
-
-
+## Panned Features 
+- Continuous learning based on chat logs
+- Better image generation 
+- Fully functional voice chat integration (being able to talk to the bot)
+- More image commands 
+- Expansion of web scraping capabilities
+- Greentext generation 
+- Database integration 
+- Bark integration
 
 ## Authors
 
