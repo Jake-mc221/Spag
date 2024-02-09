@@ -1,9 +1,14 @@
 import random
 from discord.ext import commands
 from transformers import AutoModelForCausalLM, AutoTokenizer
+from happytransformer import HappyGeneration
+from happytransformer import GENSettings
 
 tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-small")
 model = AutoModelForCausalLM.from_pretrained("xHexyy/test3")
+happy_gen = HappyGeneration("GPT2", "DarwinAnim8or/GPT-Greentext-355m")
+args_top_k = GENSettings(no_repeat_ngram_size=3, do_sample=True, top_k=80, temperature=1.0, max_length=150,
+                         early_stopping=False)
 
 
 # static method, used to get response from the model
@@ -29,6 +34,7 @@ def get_ai_res(msg):
     print("Context: {}\nSpag: {}\n".format(msg, response))
     return response
 
+
 # only responds if users says "spag"
 class ai_text(commands.Cog):
     def __init__(self, bot):
@@ -45,7 +51,6 @@ class ai_text(commands.Cog):
             response = get_ai_res(str(message.content.replace("spag", "")))
 
             await message.channel.send(response.strip())
-
 
     # sets the response rate for the bot
     @commands.command()
@@ -70,6 +75,24 @@ class ai_text(commands.Cog):
                 and message.channel.id != vent_id):
             response = get_ai_res("")
             await message.channel.send(response.strip())
+
+    @commands.command()
+    async def greentext(self, ctx, *args):
+        string = ' '.join(args)
+        if not string:
+            string = ">be me"
+        else:
+            string = ">" + string
+
+        result = happy_gen.generate_text(string, args=args_top_k)
+        file = result.text.replace(r'\n', '').strip()
+
+        for x in file:
+            if x == ">":
+                string += "\n"
+            string += x
+
+        await ctx.send(string)
 
 
 async def setup(bot):
