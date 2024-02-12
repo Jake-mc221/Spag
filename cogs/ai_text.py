@@ -76,6 +76,12 @@ class ai_text(commands.Cog):
             response = get_ai_res("")
             await message.channel.send(response.strip())
 
+    @commands.Cog.listener('on_message')
+    async def on_message_three(self, message):
+        if self.bot.user.mentioned_in(message):
+            await message.channel.send(get_ai_res(message.content))
+
+
     @commands.command()
     async def greentext(self, ctx, *args):
         string = ' '.join(args)
