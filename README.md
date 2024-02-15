@@ -45,36 +45,43 @@ Beyond his linguistic prowess, Spagorto moonlights as your server's musical cond
 
 ## Commands
 
-Commands
-```sh
-Spag Commands List
-    Image commands
-        -!pfp
-        -!fast
-        -!swirl
-        -!blur
-        -!deepfry
-        -!implode
-        -!oilpaint
-        -!meme
-        -!dis
-    React commands
-        -!ratio
-        -!clown
-    AI commands
-        -!setrate
-        -!gen
-        -!talk
-    Misc commands
-        -!download
-        -!anon
-        -!porn
-        -!status
-        -!big
-        -!rev
-    Music commands
-        -!play
-```
+### Image Commands
+
+- **`!pfp`**: Displays a users pfp with @ (if left blank it will deafult to the current users pfp)
+- **`!fast`**: Apply a fast blur filter to an image.
+- **`!swirl`**: Add a swirl effect to an image.
+- **`!blur`**: Apply a blur effect to an image.
+- **`!deepfry`**: Deep fry an image for a humorous effect.
+- **`!implode`**: Create an implode effect on an image.
+- **`!oilpaint`**: Transform an image into an oil painting style.
+- **`!meme`**: Generate a meme using the provided text.
+- **`!dis`**: Apply a distortion effect to an image.
+
+### React Commands
+
+- **`!ratio`**: Ratio a user 
+- **`!clown`**: Clown a user 
+
+### AI Commands
+
+- **`!setrate`**: Set the rate at which AI generates responses.
+- **`!gen`**: Generate text using AI.
+- **`!talk`**: Make the AI talk
+
+### Misc Commands
+
+- **`!download`**: Download a file.
+- **`!anon`**: Send an anonymous message.
+- **`!porn`**: +
+- **`!status`**: Check the status of something.
+- **`!big`**: Enlarge an emoji
+- **`!rev`**: Reverse text.
+- **`!greentext`**: Generate a greentext with or without a prompt 
+
+### Music Commands
+
+- **`!play`**: Play music from youtube. 
+
 ## Panned Features 
 - Continuous learning based on chat logs
 - Better image generation 
