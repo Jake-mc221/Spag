@@ -10,7 +10,7 @@ from helpers import key_helper
 
 TOKEN = key_helper.read_key_from_file("keys.txt", "Discord")
 INTENTS = discord.Intents.all()
-ACT = discord.Game(name=ai_text.get_ai_res("hi"))
+ACT = discord.Game(name=ai_text.get_ai_res("hi",2.0))
 bot = commands.Bot(command_prefix="!", intents=INTENTS, activity=ACT, help_command=None)
 bot.per_rate = 2
 

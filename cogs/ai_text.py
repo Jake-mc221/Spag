@@ -12,11 +12,13 @@ args_top_k = GENSettings(no_repeat_ngram_size=3, do_sample=True, top_k=80, tempe
 
 
 # static method, used to get response from the model
-def get_ai_res(msg):
+def get_ai_res(msg, temp):
+    print(temp)
     response = ""
     # If the response is empty, the loop will continue and generate a new response
     while len(response.strip()) < 1:
         # Generate a response from the model
+        # def tmep is 2.0
         new_user_input_ids = tokenizer.encode(tokenizer.eos_token + msg, return_tensors='pt')
         chat_history_ids = model.generate(new_user_input_ids,
                                           max_length=50,
@@ -25,7 +27,7 @@ def get_ai_res(msg):
                                           do_sample=True,
                                           top_k=100,
                                           top_p=3.0,
-                                          temperature=2.0)
+                                          temperature=temp)
 
         # Decode the response
         response = tokenizer.decode(chat_history_ids[:, new_user_input_ids.shape[-1]:][0], skip_special_tokens=True)
@@ -40,6 +42,7 @@ class ai_text(commands.Cog):
     def __init__(self, bot):
         self.response_chance = 1.0
         self.bot = bot
+        self.temp = 2.0
         print(f"Initializing cog with bot: {bot}")
 
     @commands.Cog.listener()
@@ -48,7 +51,7 @@ class ai_text(commands.Cog):
             return
 
         if "spag" in str(message.content).lower():
-            response = get_ai_res(str(message.content.replace("spag", "")))
+            response = get_ai_res(str(message.content.replace("spag", "")), self.temp)
 
             await message.channel.send(response.strip())
 
@@ -63,6 +66,16 @@ class ai_text(commands.Cog):
         except ValueError:
             await ctx.channel.send("`Invalid input. Please enter a valid integer.`")
 
+    # should prolly use a template for these 2 commands
+    @commands.command()
+    async def settemp(self, ctx, *, arg):
+        try:
+            self.temp = float(arg)
+            await ctx.channel.send(f"`Temp set to {self.temp}`")
+
+        except ValueError:
+            await ctx.channel.send("`Invalid input. Please enter a valid integer.`")
+
     # static code will be fixed in the future
     # responds to a message unreported
     @commands.Cog.listener('on_message')
@@ -73,14 +86,13 @@ class ai_text(commands.Cog):
         if (self.response_chance > random_number
                 and message.author != self.bot.user
                 and message.channel.id != vent_id):
-            response = get_ai_res("")
+            response = get_ai_res("", self.temp)
             await message.channel.send(response.strip())
 
     @commands.Cog.listener('on_message')
     async def on_message_three(self, message):
         if self.bot.user.mentioned_in(message):
             await message.channel.send(get_ai_res(message.content))
-
 
     @commands.command()
     async def greentext(self, ctx, *args):
