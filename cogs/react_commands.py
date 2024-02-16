@@ -35,6 +35,14 @@ class react_commands(commands.Cog):
             self.clown_amount -= 1
             await message.add_reaction("🤡")
 
+    @commands.command()
+    async def flipcoin(self, ctx):
+        """
+        Flip a coin and react with either 👍 or 👎.
+        """
+        result = random.choice(["👍", "👎"])
+        await ctx.send(result)
+
 
 async def setup(bot):
     await bot.add_cog(react_commands(bot))
