@@ -70,13 +70,14 @@ Beyond his linguistic prowess, Spagorto moonlights as your server's musical cond
 
 ### Misc Commands
 
-- **`!download`**: Download a file.
+- **`!download`**: Download a video.
 - **`!anon`**: Send an anonymous message.
-- **`!porn`**: +
-- **`!status`**: Check the status of something.
+- **`!porn`**: 
+- **`!status`**: Set the status of the bot.
 - **`!big`**: Enlarge an emoji
 - **`!rev`**: Reverse text.
 - **`!greentext`**: Generate a greentext with or without a prompt 
+- **`!settemp`**: Sets the creativity rate for spag
 
 ### Music Commands
 

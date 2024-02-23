@@ -52,6 +52,8 @@ Spag Commands List
         -!big
         -!rev
         -!greentext
+        -!settemp
+        
     Music commands
         -!play
     """

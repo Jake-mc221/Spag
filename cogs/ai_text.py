@@ -92,7 +92,7 @@ class ai_text(commands.Cog):
     @commands.Cog.listener('on_message')
     async def on_message_three(self, message):
         if self.bot.user.mentioned_in(message):
-            await message.channel.send(get_ai_res(message.content))
+            await message.channel.send(get_ai_res(message.content, self.temp))
 
     @commands.command()
     async def greentext(self, ctx, *args):
