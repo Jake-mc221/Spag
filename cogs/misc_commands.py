@@ -13,6 +13,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import yt_dlp as youtube_dl
+import sys
 
 
 # contains a bunch of wip commands, most kind suck atm
@@ -140,6 +141,17 @@ class misc_commands(commands.Cog):
         await ctx.send(mc[::-1])
 
 
+    @commands.command()
+    async def selfdestruct(self, ctx):
+        countdown = 10
+        await ctx.send("`IMMINENT SELF DESTRUCTION`")
+        while countdown > 0:
+            await ctx.send(f"`{countdown}`")
+            countdown = countdown -1
+            time.sleep(1)
+
+        await ctx.send("`bye`")
+        sys.exit()
     @commands.command()
     async def define(self, ctx):
         try:
