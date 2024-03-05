@@ -152,6 +152,15 @@ class misc_commands(commands.Cog):
 
         await ctx.send("`bye`")
         sys.exit()
+
+    @commands.command()
+    async def exit(self, ctx):
+        await ctx.send("Bot is restarting...")
+        await self.bot.close()
+        python_executable = sys.executable
+        script_path = sys.argv[0]
+        os.execv(python_executable, [python_executable, script_path] + sys.argv[1:])
+
     @commands.command()
     async def define(self, ctx):
         try:
