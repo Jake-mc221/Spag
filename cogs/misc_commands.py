@@ -211,6 +211,12 @@ class misc_commands(commands.Cog):
         except Exception as e:
             print(e)
             await ctx.send("An unexpected error occurred.")
+
+    @commands.command()
+    async def upside(self, ctx, *, text):
+        upside_down_text = text[::-1]
+        await ctx.send(f"⬆️🔄 Upside-down text: {upside_down_text}")
+
     # makes an emoji big, should probs switch to image cog
     @commands.command()
     async def big(self, ctx,  emoji):
