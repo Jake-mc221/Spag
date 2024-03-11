@@ -78,6 +78,7 @@ Beyond his linguistic prowess, Spagorto moonlights as your server's musical cond
 - **`!rev`**: Reverse text.
 - **`!greentext`**: Generate a greentext with or without a prompt 
 - **`!settemp`**: Sets the creativity rate for spag
+- **`!roll`**: Roll the dice!
 
 ### Music Commands
 

@@ -53,6 +53,7 @@ Spag Commands List
         -!rev
         -!greentext
         -!settemp
+        -!roll
         
     Music commands
         -!play
