@@ -44,8 +44,8 @@ class react_commands(commands.Cog):
         await ctx.send(result)
 
     @commands.command()
-    async def roll(self, ctx):
-        sides = 6
+    async def rolldice(self, ctx, arg: int):
+        sides = arg
         result = random.randint(1, sides)
         await ctx.send(f"🎲 You rolled a {result}!")
 
