@@ -30,6 +30,7 @@ class ai_images(commands.Cog):
         image_bytes = response.content
         image = Image.open(io.BytesIO(image_bytes))
         jpeg_img = image.convert("RGB")
+        sender = ctx.message.author
 
 
         with io.BytesIO() as image_binary:
@@ -37,7 +38,7 @@ class ai_images(commands.Cog):
             # Seek to the start of the BytesIO object
             image_binary.seek(0)
             # Send the JPEG image to the Discord channel
-            await ctx.channel.send(file=discord.File(fp=image_binary, filename="image.jpeg"))
+            await ctx.channel.send(f"{sender.mention}`used prompt: {arg}`", file=discord.File(fp=image_binary, filename="image.jpeg"))
 
     @commands.command()
     async def talk(self, ctx, *, arg):
