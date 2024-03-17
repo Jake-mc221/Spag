@@ -20,6 +20,7 @@ import sys
 class misc_commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.abort = False
 
     @commands.command()
     async def status(self, ctx, *, arg):
@@ -140,18 +141,27 @@ class misc_commands(commands.Cog):
 
         await ctx.send(mc[::-1])
 
+    @commands.command()
+    async def abort(self, ctx):
+        self.abort = True
+
 
     @commands.command()
     async def selfdestruct(self, ctx):
         countdown = 10
         await ctx.send("`IMMINENT SELF DESTRUCTION`")
         while countdown > 0:
+            if self.abort:
+                await ctx.send(f"`SELF DESTRUCTION ABORTED`")
+                self.abort = False
+                break
             await ctx.send(f"`{countdown}`")
             countdown = countdown -1
             time.sleep(1)
 
-        await ctx.send("`bye`")
-        sys.exit()
+        if countdown == 0:
+            await ctx.send("`bye`")
+            sys.exit()
 
     @commands.command()
     async def exit(self, ctx):
