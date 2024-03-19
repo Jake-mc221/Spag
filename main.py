@@ -54,6 +54,8 @@ Spag Commands List
         -!greentext
         -!settemp
         -!roll
+        -!abort
+        -!selfdestruct 
         
     Music commands
         -!play
