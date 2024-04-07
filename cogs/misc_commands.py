@@ -157,7 +157,7 @@ class misc_commands(commands.Cog):
                 break
             await ctx.send(f"`{countdown}`")
             countdown = countdown -1
-            #time.sleep(1)
+            time.sleep(2)
 
         if countdown == 0:
             await ctx.send("`bye`")
