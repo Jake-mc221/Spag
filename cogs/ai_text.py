@@ -10,7 +10,6 @@ happy_gen = HappyGeneration("GPT2", "DarwinAnim8or/GPT-Greentext-355m")
 args_top_k = GENSettings(no_repeat_ngram_size=3, do_sample=True, top_k=80, temperature=1.0, max_length=150,
                          early_stopping=False)
 
-
 # static method, used to get response from the model
 def get_ai_res(msg, temp):
     print(temp)
@@ -56,39 +55,6 @@ class ai_text(commands.Cog):
             await message.channel.send(response.strip())
 
     # sets the response rate for the bot
-    @commands.command()
-    async def setrate(self, ctx, *, arg):
-
-        try:
-            self.response_chance = float(arg)
-            await ctx.channel.send(f"`Rate set to {self.response_chance}`")
-
-        except ValueError:
-            await ctx.channel.send("`Invalid input. Please enter a valid integer.`")
-
-    # should prolly use a template for these 2 commands
-    @commands.command()
-    async def settemp(self, ctx, *, arg):
-        try:
-            self.temp = float(arg)
-            await ctx.channel.send(f"`Temp set to {self.temp}`")
-
-        except ValueError:
-            await ctx.channel.send("`Invalid input. Please enter a valid integer.`")
-
-    # static code will be fixed in the future
-    # responds to a message unreported
-    @commands.Cog.listener('on_message')
-    async def on_message_two(self, message):
-        random_number = random.randint(0, 99)
-        vent_id = 750198744485462078
-
-        if (self.response_chance > random_number
-                and message.author != self.bot.user
-                and message.channel.id != vent_id):
-            response = get_ai_res("", self.temp)
-            await message.channel.send(response.strip())
-
     @commands.Cog.listener('on_message')
     async def on_message_three(self, message):
         if self.bot.user.mentioned_in(message) and message.content[0] != "!":

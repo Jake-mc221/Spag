@@ -142,85 +142,12 @@ class misc_commands(commands.Cog):
         await ctx.send(mc[::-1])
 
     @commands.command()
-    async def abort(self, ctx):
-        self.abort = True
-
-
-    @commands.command()
-    async def selfdestruct(self, ctx):
-        countdown = 10
-        await ctx.send("`IMMINENT SELF DESTRUCTION`")
-        while countdown > 0:
-            if self.abort:
-                await ctx.send(f"`SELF DESTRUCTION ABORTED`")
-                self.abort = False
-                break
-            await ctx.send(f"`{countdown}`")
-            countdown = countdown -1
-            time.sleep(2)
-
-        if countdown == 0:
-            await ctx.send("`bye`")
-            sys.exit()
-
-    @commands.command()
     async def exit(self, ctx):
         await ctx.send("Bot is restarting...")
         await self.bot.close()
         python_executable = sys.executable
         script_path = sys.argv[0]
         os.execv(python_executable, [python_executable, script_path] + sys.argv[1:])
-
-    @commands.command()
-    async def define(self, ctx):
-        try:
-            message = ctx.message
-            mc = message.content.replace('!define', '').strip()
-
-            if not mc:
-                await ctx.send("Please provide a word to define.")
-                return
-
-            url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{mc}"
-
-            response = requests.get(url)
-
-            if response.status_code == 200:
-                data = response.json()
-
-                if data:
-                    word_info = data[0]
-                    word = word_info.get('word', 'N/A')
-                    phonetic = word_info.get('phonetic', 'N/A')
-                    meanings = word_info.get('meanings', [])
-
-                    response_text = (f"**Word:** {word}\n"
-                                     f"**Phonetic:** {phonetic}\n\n"
-                                     "**Definitions:**\n")
-
-                    for meaning in meanings:
-                        part_of_speech = meaning.get('partOfSpeech', 'N/A')
-                        definitions = meaning.get('definitions', [])
-
-                        for i, definition in enumerate(definitions, start=1):
-                            definition_text = definition.get('definition', 'N/A')
-                            example = definition.get('example', 'N/A')
-
-                            response_text += (
-                                f"{i}. **Part of Speech:** {part_of_speech}\n"
-                                f"   **Definition:** {definition_text}\n"
-                                f"   **Example:** {example}\n\n"
-                            )
-
-                    await ctx.send(response_text)
-                else:
-                    await ctx.send(f"No definitions found for {mc}.")
-            else:
-                await ctx.send(f"Error: {response.status_code} - {response.text}")
-
-        except Exception as e:
-            print(e)
-            await ctx.send("An unexpected error occurred.")
 
     # makes an emoji big, should probs switch to image cog
     @commands.command()

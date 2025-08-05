@@ -22,21 +22,22 @@ class music_commands(commands.Cog):
 
         channel = ctx.author.voice.channel
         voice = get(self.bot.voice_clients, guild=ctx.guild)
-        print(voice)
-        print(channel)
 
-        if voice and voice.is_connected():
-            await voice.move_to(channel)
-        else:
-            print("hello")
-            await channel.connect()
+
+        try:
+            if voice and voice.is_connected():
+                await voice.move_to(channel)
+            else:
+                await channel.connect()
+        except Exception as e:
+            print(f"Error connecting: {e}")
+            await ctx.send("Failed to connect to the voice channel.")
+            return
 
         await self.play_all_songs(ctx)
 
     async def play_all_songs(self, ctx):
-
         for url in self.music_queues:
-            await ctx.send('video title')
             await self.play_song(url, ctx)
 
         self.music_queues = []
@@ -45,23 +46,53 @@ class music_commands(commands.Cog):
     async def play_song(self, url, ctx):
         voice = get(self.bot.voice_clients, guild=ctx.guild)
 
-        # find better sol
-        if 'youtube' in url:
-            YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist': 'True'}
-            FFMPEG_OPTIONS = {
-                'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
+        try:
+            # find better sol
+            if 'youtube' in url:
+                YDL_OPTIONS = {
+                    'format': 'bestaudio/best',
+                    'noplaylist': True,
+                    'quiet': True,
+                    'extract_flat': False,
+                    'default_search': 'auto'
+                }
 
-            with YoutubeDL(YDL_OPTIONS) as ydl:
-                info = ydl.extract_info(url, download=False)
-            url = info['url']
+                with YoutubeDL(YDL_OPTIONS) as ydl:
+                    info = ydl.extract_info(url, download=False)
+                url = info['url']
 
-        voice.play(FFmpegPCMAudio(
-            executable=r"C:\Users\jake.mcandrew\Desktop\ffmpeg-2023-11-28-git-47e214245b-full_build\bin\ffmpeg.exe",
-            source=url))
+            voice.play(FFmpegPCMAudio(
+                executable=r"C:\Users\Server\Desktop\ffmpeg-7.1.1-full_build\ffmpeg-7.1.1-full_build\bin\ffmpeg.exe",
+                source=url))
 
-        while voice.is_playing():
-            await asyncio.sleep(1)
+            while voice.is_playing():
+                await asyncio.sleep(1)
+        except Exception as e:
+            print(e)
 
+    @commands.command()
+    async def stop(self, ctx):
+        """Stops the music and clears the queue."""
+        voice = get(self.bot.voice_clients, guild=ctx.guild)
+        if voice:
+            if voice.is_playing():
+                voice.stop()
+            await voice.disconnect()
+
+        self.music_queues = []
+        self.now_playing = None
+        await ctx.send("Stopped the music and cleared the queue.")
+
+    @commands.command()
+    async def skip(self, ctx):
+        """Skips the currently playing song."""
+        voice = get(self.bot.voice_clients, guild=ctx.guild)
+        if voice and voice.is_playing():
+            self.skip_flag = True
+            voice.stop()
+            await ctx.send("Skipped the song.")
+        else:
+            await ctx.send("No song is currently playing.")
 
 
 async def setup(bot):

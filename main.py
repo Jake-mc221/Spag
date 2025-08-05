@@ -1,6 +1,5 @@
 import asyncio
 import os
-from PIL import Image as PILImage
 
 import discord
 from discord.ext import commands
@@ -41,7 +40,6 @@ Spag Commands List
         -!ratio
         -!clown
     AI commands
-        -!setrate
         -!gen
         -!talk
     Misc commands
@@ -52,11 +50,7 @@ Spag Commands List
         -!big
         -!rev
         -!greentext
-        -!settemp
         -!roll
-        -!abort
-        -!selfdestruct 
-        
     Music commands
         -!play
     """
