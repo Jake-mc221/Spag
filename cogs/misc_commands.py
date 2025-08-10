@@ -34,8 +34,6 @@ class misc_commands(commands.Cog):
 
     # so far kinda works, issues with sound
     async def get_random_gif_from_webpage(self, url: str, arg, ctx):
-        print("test")
-
         # Setup Selenium WebDriver
         service = Service(ChromeDriverManager().install())
 
@@ -68,7 +66,7 @@ class misc_commands(commands.Cog):
         soup = BeautifulSoup(html, 'html.parser')
 
         gif_elements = soup.select('a.title, a.isVideo')
-        #print(gif_elements)
+        print(gif_elements)
 
         if gif_elements:
             # Randomly select an element

@@ -64,7 +64,6 @@ Beyond his linguistic prowess, Spagorto moonlights as your server's musical cond
 
 ### AI Commands
 
-- **`!setrate`**: Set the rate at which AI generates responses.
 - **`!gen`**: Generate text using AI.
 - **`!talk`**: Make the AI talk
 
