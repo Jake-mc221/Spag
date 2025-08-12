@@ -152,10 +152,21 @@ class misc_commands(commands.Cog):
     async def big(self, ctx,  emoji):
         match = re.search(r'(?<=:)\d+', emoji)
         id = match.group(0) if match else None
-        print(emoji)
-        emoji_url = ""
 
-        if emoji[1] == "a":
+        # temp sol
+        if match == None:
+            code = "-".join(f"{ord(c):x}" for c in emoji)
+            url = f"https://twemoji.maxcdn.com/v/latest/72x72/{code}.png"
+            emoji_image_data = requests.get(url).content
+
+            with PILImage.open(BytesIO(emoji_image_data)) as img:
+                img = img.resize((2048, 2048), PILImage.LANCZOS)
+                resized_image_data = BytesIO()
+                img.save(resized_image_data, format="PNG")
+                resized_image_data.seek(0)
+                await ctx.send(file=discord.File(resized_image_data, filename=f"resized_emoji_{code}.png"))
+
+        elif emoji[1] == "a":
             try:
                 emoji_url = f"https://cdn.discordapp.com/emojis/{id}.gif"
                 emoji_image_data = requests.get(emoji_url).content
